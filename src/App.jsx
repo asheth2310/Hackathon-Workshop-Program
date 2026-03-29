@@ -38,7 +38,7 @@ const Navbar = () => (
         <NavLink to="/resources" className="nav-link">Resources</NavLink>
         <NavLink to="/assets" className="nav-link">GTM Assets</NavLink>
         <NavLink to="/results" className="nav-link">Results</NavLink>
-        <a href="#register" className="btn btn-primary">Register Now</a>
+        <Link to="/register" className="btn btn-primary">Register Now</Link>
       </div>
     </div>
   </nav>
@@ -325,6 +325,46 @@ const ResultsPage = () => (
   </div>
 );
 
+const RegisterPage = () => (
+  <div className="main-content fade-in">
+    <div className="container" style={{ maxWidth: '600px' }}>
+      <h2 className="section-title">Request Your Invite</h2>
+      <div className="card">
+        <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem', textAlign: 'center' }}>
+          Admission to the LLM Developer Hackathon is selective. Please provide your details to apply for a slot.
+        </p>
+        <form onSubmit={(e) => { e.preventDefault(); alert("Request submitted! Our team will review your application."); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--primary)' }}>FULL NAME</label>
+            <input type="text" placeholder="Jane Doe" style={{ background: 'var(--bg-deep)', border: '1px solid var(--border)', padding: '0.75rem', borderRadius: '8px', color: 'white' }} required />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--primary)' }}>COMPANY EMAIL</label>
+            <input type="email" placeholder="jane@company.ai" style={{ background: 'var(--bg-deep)', border: '1px solid var(--border)', padding: '0.75rem', borderRadius: '8px', color: 'white' }} required />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--primary)' }}>ROLE</label>
+            <select style={{ background: 'var(--bg-deep)', border: '1px solid var(--border)', padding: '0.75rem', borderRadius: '8px', color: 'white' }}>
+              <option>Data Engineer</option>
+              <option>Data Architect</option>
+              <option>ML Engineer</option>
+              <option>Solution Architect</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--primary)' }}>DBT / AIRFLOW EXPERIENCE</label>
+            <textarea placeholder="Tell us about your background with data orchestration..." style={{ background: 'var(--bg-deep)', border: '1px solid var(--border)', padding: '0.75rem', borderRadius: '8px', color: 'white', minHeight: '100px' }}></textarea>
+          </div>
+          <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '1rem', justifyContent: 'center' }}>
+            Submit Application <Rocket size={18} />
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+);
+
 // --- APP ---
 
 function App() {
@@ -342,6 +382,7 @@ function App() {
             <Route path="/resources" element={<ResourcesPage />} />
             <Route path="/assets" element={<AssetsPage />} />
             <Route path="/results" element={<ResultsPage />} />
+            <Route path="/register" element={<RegisterPage />} />
           </Routes>
         </main>
         <Footer />
