@@ -13,7 +13,8 @@ import {
   ArrowRight,
   Shield,
   Layers,
-  Users
+  Users,
+  Loader2
 } from 'lucide-react';
 
 // --- COMPONENTS ---
@@ -249,35 +250,76 @@ const ResourcesPage = () => (
   </div>
 );
 
-const AssetsPage = () => (
-  <div className="main-content fade-in">
-    <div className="container">
-      <h2 className="section-title">GTM Assets Portfolio</h2>
-      <div className="stats-grid">
-        <div className="card">
-          <h4>Solution Brief Template</h4>
-          <p style={{ margin: '1rem 0', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Professional one-pager for technical stakeholder alignment.</p>
-          <button className="btn btn-primary" style={{ width: '100%' }}><Download size={18} /> Download Brief</button>
-        </div>
-        <div className="card">
-          <h4>Demo Walkthrough Script</h4>
-          <p style={{ margin: '1rem 0', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Scripted journey for high-impact executive presentations.</p>
-          <button className="btn btn-primary" style={{ width: '100%' }}><Download size={18} /> Download Script</button>
-        </div>
-        <div className="card">
-          <h4>Data Quality Playbook</h4>
-          <p style={{ margin: '1rem 0', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Standardized workflow for LLM-based data auditing.</p>
-          <button className="btn btn-primary" style={{ width: '100%' }}><Download size={18} /> Download Playbook</button>
-        </div>
-        <div className="card">
-          <h4>Governance Playbook</h4>
-          <p style={{ margin: '1rem 0', fontSize: '0.9rem', color: 'var(--text-muted)' }}>Policy and safety patterns for enterprise AI deployment.</p>
-          <button className="btn btn-primary" style={{ width: '100%' }}><Download size={18} /> Download Playbook</button>
+const AssetsPage = () => {
+  const [downloading, setDownloading] = React.useState({});
+
+  const handleDownload = (id) => {
+    setDownloading(prev => ({ ...prev, [id]: 'loading' }));
+    setTimeout(() => {
+      setDownloading(prev => ({ ...prev, [id]: 'done' }));
+      // Mock download
+      const element = document.createElement("a");
+      const file = new Blob(["Mock Playbook Content"], {type: 'text/plain'});
+      element.href = URL.createObjectURL(file);
+      element.download = `${id}.txt`;
+      document.body.appendChild(element);
+      element.click();
+      setTimeout(() => setDownloading(prev => ({ ...prev, [id]: null })), 3000);
+    }, 1200);
+  };
+
+  const AssetCard = ({ title, desc, id }) => (
+    <div className="card">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+        <h4 style={{ margin: 0 }}>{title}</h4>
+        <button 
+          onClick={() => handleDownload(id)}
+          className={`btn ${downloading[id] === 'done' ? 'btn-outline' : 'btn-primary'}`}
+          style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: '120px', justifyContent: 'center' }}
+          disabled={downloading[id] === 'loading'}
+        >
+          {downloading[id] === 'loading' ? <Loader2 className="spin" size={16} /> : 
+           downloading[id] === 'done' ? <CheckCircle2 size={16} /> : <Download size={16} />}
+          <span>
+            {downloading[id] === 'loading' ? 'Saving...' : 
+             downloading[id] === 'done' ? 'Saved' : 'Download'}
+          </span>
+        </button>
+      </div>
+      <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{desc}</p>
+    </div>
+  );
+
+  return (
+    <div className="main-content fade-in">
+      <div className="container">
+        <h2 className="section-title">GTM Assets Portfolio</h2>
+        <div className="stats-grid">
+          <AssetCard 
+            id="solution-brief"
+            title="Solution Brief Template" 
+            desc="Professional one-pager for technical stakeholder alignment."
+          />
+          <AssetCard 
+            id="demo-script"
+            title="Demo Walkthrough Script" 
+            desc="Scripted journey for high-impact executive presentations."
+          />
+          <AssetCard 
+            id="data-quality-playbook"
+            title="Data Quality Playbook" 
+            desc="Standardized workflow for LLM-based data auditing."
+          />
+          <AssetCard 
+            id="governance-playbook"
+            title="Governance Playbook" 
+            desc="Policy and safety patterns for enterprise AI deployment."
+          />
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const ResultsPage = () => (
   <div className="main-content fade-in">
@@ -325,45 +367,68 @@ const ResultsPage = () => (
   </div>
 );
 
-const RegisterPage = () => (
-  <div className="main-content fade-in">
-    <div className="container" style={{ maxWidth: '600px' }}>
-      <h2 className="section-title">Request Your Invite</h2>
-      <div className="card">
-        <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem', textAlign: 'center' }}>
-          Admission to the LLM Developer Hackathon is selective. Please provide your details to apply for a slot.
-        </p>
-        <form onSubmit={(e) => { e.preventDefault(); alert("Request submitted! Our team will review your application."); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--primary)' }}>FULL NAME</label>
-            <input type="text" placeholder="Jane Doe" style={{ background: 'var(--bg-deep)', border: '1px solid var(--border)', padding: '0.75rem', borderRadius: '8px', color: 'white' }} required />
+const RegisterPage = () => {
+  const [submitted, setSubmitted] = React.useState(false);
+
+  if (submitted) {
+    return (
+      <div className="main-content fade-in">
+        <div className="container" style={{ maxWidth: '600px', textAlign: 'center' }}>
+          <div className="card" style={{ padding: '4rem 2rem' }}>
+            <CheckCircle2 color="var(--primary)" size={64} style={{ marginBottom: '2rem', margin: '0 auto 2rem' }} />
+            <h2 style={{ marginBottom: '1rem' }}>Registration Successful!</h2>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem' }}>
+              Thank you for applying. Our team will review your background with dbt and Airflow and get back to you within 24 hours.
+            </p>
+            <Link to="/" className="btn btn-primary" style={{ margin: '0 auto' }}>
+              Return Home <ArrowRight size={18} />
+            </Link>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--primary)' }}>COMPANY EMAIL</label>
-            <input type="email" placeholder="jane@company.ai" style={{ background: 'var(--bg-deep)', border: '1px solid var(--border)', padding: '0.75rem', borderRadius: '8px', color: 'white' }} required />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--primary)' }}>ROLE</label>
-            <select style={{ background: 'var(--bg-deep)', border: '1px solid var(--border)', padding: '0.75rem', borderRadius: '8px', color: 'white' }}>
-              <option>Data Engineer</option>
-              <option>Data Architect</option>
-              <option>ML Engineer</option>
-              <option>Solution Architect</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--primary)' }}>DBT / AIRFLOW EXPERIENCE</label>
-            <textarea placeholder="Tell us about your background with data orchestration..." style={{ background: 'var(--bg-deep)', border: '1px solid var(--border)', padding: '0.75rem', borderRadius: '8px', color: 'white', minHeight: '100px' }}></textarea>
-          </div>
-          <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '1rem', justifyContent: 'center' }}>
-            Submit Application <Rocket size={18} />
-          </button>
-        </form>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="main-content fade-in">
+      <div className="container" style={{ maxWidth: '600px' }}>
+        <h2 className="section-title">Request Your Invite</h2>
+        <div className="card">
+          <p style={{ color: 'var(--text-muted)', marginBottom: '2.5rem', textAlign: 'center' }}>
+            Admission to the LLM Developer Hackathon is selective. Please provide your details to apply for a slot.
+          </p>
+          <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--primary)' }}>FULL NAME</label>
+              <input type="text" placeholder="Jane Doe" style={{ background: 'var(--bg-deep)', border: '1px solid var(--border)', padding: '0.75rem', borderRadius: '8px', color: 'white' }} required />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--primary)' }}>COMPANY EMAIL</label>
+              <input type="email" placeholder="jane@company.ai" style={{ background: 'var(--bg-deep)', border: '1px solid var(--border)', padding: '0.75rem', borderRadius: '8px', color: 'white' }} required />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--primary)' }}>ROLE</label>
+              <select style={{ background: 'var(--bg-deep)', border: '1px solid var(--border)', padding: '0.75rem', borderRadius: '8px', color: 'white' }}>
+                <option>Data Engineer</option>
+                <option>Data Architect</option>
+                <option>ML Engineer</option>
+                <option>Solution Architect</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <label style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--primary)' }}>DBT / AIRFLOW EXPERIENCE</label>
+              <textarea placeholder="Tell us about your background with data orchestration..." style={{ background: 'var(--bg-deep)', border: '1px solid var(--border)', padding: '0.75rem', borderRadius: '8px', color: 'white', minHeight: '100px' }} required></textarea>
+            </div>
+            <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '1rem', justifyContent: 'center' }}>
+              Submit Application <Rocket size={18} />
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // --- APP ---
 
