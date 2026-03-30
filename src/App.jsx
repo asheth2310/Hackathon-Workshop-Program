@@ -14,7 +14,8 @@ import {
   Shield,
   Layers,
   Users,
-  Loader2
+  Loader2,
+  Zap
 } from 'lucide-react';
 
 // --- COMPONENTS ---
@@ -340,7 +341,7 @@ const ResultsPage = () => (
           </div>
           <div>
             <h5 style={{ color: 'var(--primary)', fontSize: '0.7rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>02 / THE EXECUTION</h5>
-            <p style={{ fontSize: '1.1rem', fontWeight: '500' }}>2-day intensive hackathon using dbt and Airflow.</p>
+            <p style={{ fontSize: '1.1rem', fontWeight: '500' }}>2-day hackathon, familiar tools, dbt and Airflow.</p>
           </div>
           <div>
             <h5 style={{ color: 'var(--primary)', fontSize: '0.7rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>03 / THE PROOF</h5>
@@ -356,7 +357,10 @@ const ResultsPage = () => (
           </div>
           <div style={{ borderTop: '1px solid var(--border)', paddingTop: '2rem' }}>
             <h5 style={{ color: 'var(--secondary)', fontSize: '0.7rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>06 / THE CLOSER</h5>
-            <p style={{ fontSize: '1.1rem', fontWeight: '500' }}>Technical excellence meeting business demand.</p>
+            <p style={{ fontSize: '1.1rem', fontWeight: '500' }}>Here's the live link.</p>
+            <Link to="/" className="btn btn-outline" style={{ marginTop: '1rem', padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}>
+              View Results <ArrowRight size={14} />
+            </Link>
           </div>
         </div>
       </div>
