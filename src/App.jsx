@@ -324,8 +324,44 @@ const AssetsPage = () => {
 const ResultsPage = () => (
   <div className="main-content fade-in">
     <div className="container">
-      <h2 className="section-title">Program Impact</h2>
+      <h2 className="section-title">Strategic Impact & Revenue</h2>
       
+      {/* Strategic Narrative / Revenue Connection Section */}
+      <div className="card" style={{ marginBottom: '5rem', background: 'linear-gradient(135deg, var(--bg-deep) 0%, #161b22 100%)', border: '1px solid var(--primary)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2.5rem' }}>
+          <Zap color="var(--primary)" size={32} />
+          <h3 style={{ margin: 0 }}>The Executive Brief</h3>
+        </div>
+        
+        <div className="grid-3" style={{ gap: '2rem' }}>
+          <div>
+            <h5 style={{ color: 'var(--primary)', fontSize: '0.7rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>01 / THE MISSION</h5>
+            <p style={{ fontSize: '1.1rem', fontWeight: '500' }}>Developers adopt from experience, not blog posts.</p>
+          </div>
+          <div>
+            <h5 style={{ color: 'var(--primary)', fontSize: '0.7rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>02 / THE EXECUTION</h5>
+            <p style={{ fontSize: '1.1rem', fontWeight: '500' }}>2-day intensive hackathon using dbt and Airflow.</p>
+          </div>
+          <div>
+            <h5 style={{ color: 'var(--primary)', fontSize: '0.7rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>03 / THE PROOF</h5>
+            <p style={{ fontSize: '1.1rem', fontWeight: '500' }}>91% completion rate across all technical teams.</p>
+          </div>
+          <div style={{ borderTop: '1px solid var(--border)', paddingTop: '2rem' }}>
+            <h5 style={{ color: 'var(--secondary)', fontSize: '0.7rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>04 / THE PM INSIGHT</h5>
+            <p style={{ fontSize: '1.1rem', fontWeight: '500' }}>The real output was GTM assets, not just the event.</p>
+          </div>
+          <div style={{ borderTop: '1px solid var(--border)', paddingTop: '2rem' }}>
+            <h5 style={{ color: 'var(--secondary)', fontSize: '0.7rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>05 / REVENUE CONNECTION</h5>
+            <p style={{ fontSize: '1.1rem', fontWeight: '500' }}>Field teams enabled to close deals faster.</p>
+          </div>
+          <div style={{ borderTop: '1px solid var(--border)', paddingTop: '2rem' }}>
+            <h5 style={{ color: 'var(--secondary)', fontSize: '0.7rem', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>06 / THE CLOSER</h5>
+            <p style={{ fontSize: '1.1rem', fontWeight: '500' }}>Technical excellence meeting business demand.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2 className="section-title">Program Performance</h2>
       <div className="stats-grid" style={{ marginBottom: '5rem' }}>
         <div className="stat-card" style={{ textAlign: 'center' }}>
           <span className="stat-value">91%</span>
